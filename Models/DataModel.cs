@@ -17,7 +17,9 @@ namespace BotGoJs.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string BotID { get; set; }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class LinkDataArray
     {
         public string from { get; set; }
@@ -32,7 +34,6 @@ namespace BotGoJs.Models
         public string key { get; set; }
         public string text { get; set; }
         public List<dynamic> onRecieve { get; set; }
-
         public List<dynamic> onEnter { get; set; }
         public List<dynamic> transition { get; set; }
         public string location { get; set; }

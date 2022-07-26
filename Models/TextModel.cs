@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
-    /// <summary>
-    /// Modèle qui servira à la persistance des Bots créés depuis le front
-    /// </summary>
-    public class BotModel  
+    public class TextModel 
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        //Id du bot
         public string _id { get; set; }
-        
-        //Nom du bot
-        public string name { get; set; }
+
+        public string message { get; set; }
+
+        public DateTime createdAt { get; set; }
+
+        public DateTime modifiedAt { get; set; }
+
+        public string type { get; set; }
+
     }
 }
