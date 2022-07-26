@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
-    public class Bot  
+    public class BotModel  
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
