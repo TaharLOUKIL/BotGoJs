@@ -8,7 +8,7 @@ namespace BotGoJs.Models
     /// <summary>
     /// Modèle qui servira à la persistance des images
     /// </summary>
-    public class Image 
+    public class ImageModel 
     {
         public string _id { get; set; }
 

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace BotGoJs.Models
+namespace BotGoJsModels
 {
-    public class AudioModel 
+    public class FileModel
     {
         public string _id { get; set; }
 
