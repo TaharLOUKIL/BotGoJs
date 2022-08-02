@@ -30,7 +30,7 @@ namespace BotGoJs.Controllers
         public JsonResult get([FromRoute] string  id)
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var dblist = dbclient.GetDatabase("Gojs").GetCollection<DataModel>("Data").AsQueryable().Where(c=>c.BotID==id).ToList();
+            var dblist = dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").AsQueryable().Where(c=> c.BotID==id).ToList();
             List<DataModel> list = new List<DataModel>();
             foreach(var i in dblist)
             {
@@ -45,7 +45,7 @@ namespace BotGoJs.Controllers
             var res = this.convertTodatabaseModel(data);
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             data._id = ObjectId.GenerateNewId().ToString();
-            dbclient.GetDatabase("Gojs").GetCollection<DataBaseViewModel>("Data").InsertOne(res);
+            dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").InsertOne(res);
             return new JsonResult(data);
         }
 
@@ -56,15 +56,15 @@ namespace BotGoJs.Controllers
         public JsonResult Put(DataModel data)
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var filter = Builders<DataBaseViewModel>.Filter.Eq("_id", data._id);
+            var filter = Builders<DataViewModel>.Filter.Eq("_id", data._id);
             var res = this.convertTodatabaseModel(data); 
-            dbclient.GetDatabase("Gojs").GetCollection<DataBaseViewModel>("Data").ReplaceOne(filter, res);
+            dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").ReplaceOne(filter, res);
             return new JsonResult(get(data.BotID));
         }
 
-       public DataModel convertTodatabaseModel(DataModel  data)
+       public DataViewModel convertTodatabaseModel(DataModel  data)
         {
-            DataModel Dvm = new DataModel();
+            DataViewModel Dvm = new DataViewModel();
             Dvm._id = data._id;
             Dvm.name = data.name;
             Dvm.BotID = data.BotID;
