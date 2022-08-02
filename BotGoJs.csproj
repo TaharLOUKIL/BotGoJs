@@ -6,6 +6,10 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Resources\Image\" />
+    <Folder Include="Resources\Audio\" />
+    <Folder Include="Resources\File\" />
+    <Folder Include="Resources\Video\" />
   </ItemGroup>
 
   <ItemGroup>
