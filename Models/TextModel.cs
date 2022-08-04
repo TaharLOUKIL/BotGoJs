@@ -13,15 +13,42 @@ namespace BotGoJs.Models
     public class TextModel 
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string _id { get; set; }
 
-        public string message { get; set; }
+        private string _id;
+        private string _message;
+        private DateTime _createdAt;
+        private DateTime _modifiedAt;
+        private string _type;
 
-        public DateTime createdAt { get; set; }
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
 
-        public DateTime modifiedAt { get; set; }
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
+        }
 
-        public string type { get; set; }
+        public DateTime CreatedAt
+        {
+            get { return this._createdAt; }
+            set { this._createdAt = value; }
+        }
+
+        public DateTime ModifiedAt
+        {
+            get { return this._modifiedAt; }
+            set { this._modifiedAt = value; }
+        }
+
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
 
     }
 }

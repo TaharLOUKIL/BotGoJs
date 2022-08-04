@@ -1,13 +1,9 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -21,6 +17,7 @@ namespace BotGoJs.Controllers
         {
             _configuration = configuration;
         }
+
         [HttpGet]
         public JsonResult get()
         {
@@ -33,8 +30,8 @@ namespace BotGoJs.Controllers
         public JsonResult Post(TextModel data)
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            data._id = ObjectId.GenerateNewId().ToString();
-            data.type = "Text";
+            data.Id = ObjectId.GenerateNewId().ToString();
+            data.Type = "Text";
 
             dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").InsertOne(data);
             return get();
@@ -44,8 +41,8 @@ namespace BotGoJs.Controllers
         public JsonResult Put(TextModel data)
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var filter = Builders<TextModel>.Filter.Eq("_id", data._id);
-            data.type = "Text";
+            var filter = Builders<TextModel>.Filter.Eq("_id", data.Id);
+            data.Type = "Text";
             dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").ReplaceOne(filter, data);
             return get();
         }
@@ -56,7 +53,6 @@ namespace BotGoJs.Controllers
             MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
             var filter = Builders<TextModel>.Filter.Eq("_id", id);
-
 
             dbClient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").DeleteOne(filter);
 
