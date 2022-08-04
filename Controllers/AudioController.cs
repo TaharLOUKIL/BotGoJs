@@ -25,26 +25,15 @@ namespace BotGoJs.Controllers
     }
 
 
-    [HttpDelete("{id}")]
-    public JsonResult Delete(string id)
-    {
-        MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
-        var filter = Builders<AudioModel>.Filter.Eq("_id", id);
-
-
-        dbClient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").DeleteOne(filter);
-
-        return get();
-    }
 
     [HttpGet]
     public JsonResult get()
     {
-        MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-        var dblist = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").AsQueryable();
-        return new JsonResult(dblist);
-    }
+            AudioModel audio = new AudioModel();
+            
+        return audio.LoadAll();
+        }
 
     [HttpPost, DisableRequestSizeLimit]
     public async Task<JsonResult> upload()
@@ -143,5 +132,18 @@ namespace BotGoJs.Controllers
 
     }
 
-}
+        [HttpDelete("{id}")]
+        public JsonResult Delete(string id)
+        {
+            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
+
+            var filter = Builders<AudioModel>.Filter.Eq("_id", id);
+
+
+            dbClient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").DeleteOne(filter);
+
+            return get();
+        }
+
+    }
 }

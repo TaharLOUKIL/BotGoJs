@@ -1,15 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
+using System;
 
 namespace BotGoJs.Models
 {
     public class AudioModel
     {
+        #region Properties
         private string _id;
         private string _titre;
         private string _url;
         private DateTime _createdAt;
         private DateTime _modifiedAt;
         private string _type;
+        private IConfiguration _configuration;
 
         public string Id
         {
@@ -46,5 +51,40 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
+        #endregion
+        #region Methods
+        public AudioModel()
+        {
+        }
+        public AudioModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public JsonResult LoadAll()
+        {
+            MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
+            var dblist = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").AsQueryable();
+            return new JsonResult(dblist);
+        }
+
+        public Boolean Save(AudioModel data)
+        {
+            
+        }
+
+        public Boolean Update(AudioModel data)
+        {
+
+        }
+
+        public Boolean Delete(string id)
+        {
+
+        }
+        #endregion
+
+
+
     }
 }
