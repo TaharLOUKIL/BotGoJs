@@ -1,7 +1,4 @@
 {
-  "ConnectionStrings": {
-    "gojsConnection": "mongodb+srv://gojs:aBOCMgLAum8vTecv@cluster0.nlkyi.mongodb.net/?retryWrites=true&w=majority"
-  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",

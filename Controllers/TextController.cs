@@ -1,19 +1,17 @@
 ﻿using BotGoJs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Linq;
 
 namespace BotGoJs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TexteController : ControllerBase
+    public class TextController : ControllerBase
     {
         public readonly IConfiguration _configuration;
 
-        public TexteController(IConfiguration configuration)
+        public TextController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -21,41 +19,31 @@ namespace BotGoJs.Controllers
         [HttpGet]
         public JsonResult get()
         {
-            MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var dblist = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable();
-            return new JsonResult(dblist);
+            TextModel text = new TextModel();
+            return text.LoadAll();
         }
 
         [HttpPost]
         public JsonResult Post(TextModel data)
         {
-            MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            data.Id = ObjectId.GenerateNewId().ToString();
-            data.Type = "Text";
-
-            dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").InsertOne(data);
+            TextModel text = new TextModel();
+            text.Save(data);
             return get();
         }
 
         [HttpPut]
         public JsonResult Put(TextModel data)
         {
-            MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var filter = Builders<TextModel>.Filter.Eq("_id", data.Id);
-            data.Type = "Text";
-            dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").ReplaceOne(filter, data);
+            TextModel text = new TextModel();
+            text.Update(data);
             return get();
         }
 
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-
-            var filter = Builders<TextModel>.Filter.Eq("_id", id);
-
-            dbClient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").DeleteOne(filter);
-
+            TextModel text = new TextModel();
+            text.Delete(id);
             return get();
         }
     }

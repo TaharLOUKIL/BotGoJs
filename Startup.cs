@@ -16,6 +16,8 @@ namespace BotGoJs
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //Current configuration
+            //GoJsConf = Configuration.GetConnectionString("gojsConnection");
         }
 
         public IConfiguration Configuration { get; }
