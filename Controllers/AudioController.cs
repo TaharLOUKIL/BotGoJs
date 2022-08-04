@@ -68,20 +68,20 @@ namespace BotGoJs.Controllers
                     {
                         file.CopyTo(stream);
                     }
-                    audio.url = "http://localhost:12195/Resources/audio/" + fileName;
+                    audio.Url = "http://localhost:12195/Resources/audio/" + fileName;
                 }
             }
             else
             {
-                audio.url = formCollection["url"];
+                audio.Url = formCollection["url"];
             }
 
-            audio.createdAt = DateTime.Now;
-            audio.modifiedAt = DateTime.Now;
+            audio.CreatedAt = DateTime.Now;
+            audio.ModifiedAt = DateTime.Now;
             audio.Titre = formCollection["Titre"];
-            audio.type = "Audio";
+            audio.Type = "Audio";
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            audio._id = ObjectId.GenerateNewId().ToString();
+            audio.Id = ObjectId.GenerateNewId().ToString();
             dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").InsertOne(audio);
             return get();
         }
@@ -115,23 +115,23 @@ namespace BotGoJs.Controllers
                     {
                         file.CopyTo(stream);
                     }
-                    audio.url = "http://localhost:12195/Resources/audio/" + fileName;
+                    audio.Url = "http://localhost:12195/Resources/audio/" + fileName;
                 }
             }
             else
             {
-                audio.url = formCollection["url"];
+                audio.Url = formCollection["url"];
             }
 
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
 
-            audio.createdAt = DateTime.Parse(formCollection["createdAt"]);
-            audio.modifiedAt = DateTime.Now;
+            audio.CreatedAt = DateTime.Parse(formCollection["createdAt"]);
+            audio.ModifiedAt = DateTime.Now;
             audio.Titre = formCollection["Titre"];
-            audio._id = formCollection["ID"];
-                audio.type = "Audio";
-                var filter = Builders<AudioModel>.Filter.Eq("_id", audio._id);
+            audio.Id = formCollection["ID"];
+                audio.Type = "Audio";
+                var filter = Builders<AudioModel>.Filter.Eq("_id", audio.Id);
             dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").ReplaceOne(filter, audio);
             return get();
         }

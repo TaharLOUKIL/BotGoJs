@@ -202,7 +202,7 @@ namespace BotGoJs.Controllers
                         var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
-                            obj.type = onenter.type;
+                            obj.Type = onenter.type;
                             ndavm.onEnter.Add(obj);
                         }
                         
@@ -267,7 +267,7 @@ namespace BotGoJs.Controllers
                         var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if (obj != null)
                         {
-                            obj.type = onrecieve.type;
+                            obj.Type = onrecieve.type;
                             ndavm.onRecieve.Add(obj);
                         }
                     }
@@ -328,7 +328,7 @@ namespace BotGoJs.Controllers
                         var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                        if (obj != null)
                         {
-                            obj.type = transition.type;
+                            obj.Type = transition.type;
                             ndavm.transition.Add(obj);
                         }
                     }
