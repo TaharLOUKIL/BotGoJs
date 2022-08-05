@@ -70,17 +70,32 @@ namespace BotGoJs.Models
 
         public Boolean Save(AudioModel data)
         {
-            
+            // faire comme textModel
         }
 
         public Boolean Update(AudioModel data)
         {
-
+            // faire comme textModel
         }
 
         public Boolean Delete(string id)
         {
+            try
+            {
+                MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
+                var filter = Builders<AudioModel>.Filter.Eq("_id", id);
+
+
+                dbClient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").DeleteOne(filter);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+         
         }
         #endregion
 

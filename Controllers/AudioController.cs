@@ -135,13 +135,8 @@ namespace BotGoJs.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-
-            var filter = Builders<AudioModel>.Filter.Eq("_id", id);
-
-
-            dbClient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").DeleteOne(filter);
-
+            AudioModel audio = new AudioModel();
+            audio.Delete(id);
             return get();
         }
 
