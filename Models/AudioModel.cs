@@ -75,11 +75,13 @@ namespace BotGoJs.Models
 
         public Boolean Save(AudioModel data)
         {
+            return false;
             // faire comme textModel
         }
 
         public Boolean Update(AudioModel data)
         {
+            return false;
             // faire comme textModel
         }
 
