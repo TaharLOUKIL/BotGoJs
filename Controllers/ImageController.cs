@@ -1,11 +1,9 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -13,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
-
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
@@ -27,14 +22,12 @@ namespace BotGoJs.Controllers
             _configuration = configuration;
         }
 
-
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
         {
             MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
             var filter = Builders<ImageModel>.Filter.Eq("_id", id);
-
 
             dbClient.GetDatabase("Gojs").GetCollection<ImageModel>("Image").DeleteOne(filter);
 
@@ -56,7 +49,7 @@ namespace BotGoJs.Controllers
             {
                 ImageModel image = new ImageModel();
                 var formCollection = await Request.ReadFormAsync();
-                
+
                 if (formCollection["url"].ToString().Length == 0)
                 {
                     var file = formCollection.Files.First();
@@ -73,9 +66,10 @@ namespace BotGoJs.Controllers
                         }
                         image.url = "http://localhost:12195/Resources/image/" + fileName;
                     }
-                }else
+                }
+                else
                 {
-                    image.url= formCollection["url"];
+                    image.url = formCollection["url"];
                 }
 
                 image.createdAt = DateTime.Now;
@@ -91,8 +85,6 @@ namespace BotGoJs.Controllers
             {
                 return new JsonResult(StatusCode(500, $"Internal server error: {ex}"));
             }
-
-
         }
 
         [HttpPut, DisableRequestSizeLimit]
@@ -126,8 +118,7 @@ namespace BotGoJs.Controllers
                 }
 
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-                
-               
+
                 image.createdAt = DateTime.Parse(formCollection["createdAt"]);
                 image.modifiedAt = DateTime.Now;
                 image.type = "Image";
@@ -141,12 +132,6 @@ namespace BotGoJs.Controllers
             {
                 return new JsonResult(StatusCode(500, $"Internal server error: {ex}"));
             }
-
-
         }
-
     }
-
-
-
 }

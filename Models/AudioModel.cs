@@ -8,6 +8,7 @@ namespace BotGoJs.Models
     public class AudioModel
     {
         #region Properties
+
         private string _id;
         private string _titre;
         private string _url;
@@ -51,11 +52,15 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
-        #endregion
+
+        #endregion Properties
+
         #region Methods
+
         public AudioModel()
         {
         }
+
         public AudioModel(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -86,20 +91,15 @@ namespace BotGoJs.Models
 
                 var filter = Builders<AudioModel>.Filter.Eq("_id", id);
 
-
                 dbClient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").DeleteOne(filter);
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
-         
         }
-        #endregion
 
-
-
+        #endregion Methods
     }
 }

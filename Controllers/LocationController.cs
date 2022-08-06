@@ -1,13 +1,9 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -56,7 +52,6 @@ namespace BotGoJs.Controllers
             MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
             var filter = Builders<LocationModel>.Filter.Eq("_id", id);
-
 
             dbClient.GetDatabase("Gojs").GetCollection<LocationModel>("Localisation").DeleteOne(filter);
 

@@ -53,8 +53,6 @@ namespace BotGoJs.Models
             set { this._type = value; }
         }
 
-
-
         #endregion Properties
 
         #region Methods
@@ -65,16 +63,19 @@ namespace BotGoJs.Models
         public TextModel()
         {
         }
+
         public TextModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var dblist = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable();
             return new JsonResult(dblist);
         }
+
         public Boolean Save(TextModel data)
         {
             try
@@ -91,6 +92,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Update(TextModel data)
         {
             try
@@ -107,6 +109,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Delete(string id)
         {
             try

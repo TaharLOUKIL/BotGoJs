@@ -1,13 +1,9 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -16,6 +12,7 @@ namespace BotGoJs.Controllers
     public class BotController : ControllerBase
     {
         public readonly IConfiguration _configuration;
+
         public BotController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -32,7 +29,6 @@ namespace BotGoJs.Controllers
         [HttpPost]
         public JsonResult Post(BotModel data)
         {
-
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             data._id = ObjectId.GenerateNewId().ToString();
             dbclient.GetDatabase("Gojs").GetCollection<BotModel>("Bots").InsertOne(data);
@@ -47,6 +43,5 @@ namespace BotGoJs.Controllers
             dbclient.GetDatabase("Gojs").GetCollection<BotModel>("Bots").ReplaceOne(filter, data);
             return new JsonResult(data);
         }
-
     }
 }

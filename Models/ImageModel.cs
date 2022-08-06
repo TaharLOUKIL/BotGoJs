@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
     /// <summary>
     /// Modèle qui servira à la persistance des images
     /// </summary>
-    public class ImageModel 
+    public class ImageModel
     {
         public string _id { get; set; }
 

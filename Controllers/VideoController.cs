@@ -22,14 +22,12 @@ namespace BotGoJs.Controllers
             _configuration = configuration;
         }
 
-
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
         {
             MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
             var filter = Builders<VideoModel>.Filter.Eq("_id", id);
-
 
             dbClient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").DeleteOne(filter);
 
@@ -87,8 +85,6 @@ namespace BotGoJs.Controllers
             {
                 return new JsonResult(StatusCode(500, $"Internal server error: {ex}"));
             }
-
-
         }
 
         [HttpPut, DisableRequestSizeLimit]
@@ -135,9 +131,6 @@ namespace BotGoJs.Controllers
             {
                 return new JsonResult(StatusCode(500, $"Internal server error: {ex}"));
             }
-
-
         }
-
     }
 }
