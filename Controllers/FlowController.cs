@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,6 +43,13 @@ namespace BotGoJs.Controllers
             obj.text = new List<TextModel>();
             obj.text = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable().ToList();
             return new JsonResult(obj);
+        }
+
+        // à implémenter
+        [HttpPost]
+        public Boolean Post(DataModel dataModel)
+        {
+            return true;
         }
     }
 }
