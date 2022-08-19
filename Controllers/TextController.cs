@@ -1,6 +1,7 @@
 ﻿using BotGoJs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 
 namespace BotGoJs.Controllers
 {
@@ -18,14 +19,14 @@ namespace BotGoJs.Controllers
         [HttpGet]
         public JsonResult get()
         {
-            TextModel text = new TextModel();
+            TextModel text = new TextModel(_configuration);
             return text.LoadAll();
         }
 
         [HttpPost]
         public JsonResult Post(TextModel data)
         {
-            TextModel text = new TextModel();
+            TextModel text = new TextModel(_configuration);
             text.Save(data);
             return get();
         }
@@ -33,7 +34,7 @@ namespace BotGoJs.Controllers
         [HttpPut]
         public JsonResult Put(TextModel data)
         {
-            TextModel text = new TextModel();
+            TextModel text = new TextModel(_configuration);
             text.Update(data);
             return get();
         }
@@ -41,7 +42,7 @@ namespace BotGoJs.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
         {
-            TextModel text = new TextModel();
+            TextModel text = new TextModel(_configuration);
             text.Delete(id);
             return get();
         }
