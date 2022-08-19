@@ -15,7 +15,7 @@ namespace BotGoJs.Models
         #region Properties
 
         [BsonRepresentation(BsonType.ObjectId)]
-        private string _id;
+        public string _id { get; set; }
 
         private string _message;
         private DateTime _createdAt;
@@ -23,11 +23,11 @@ namespace BotGoJs.Models
         private string _type;
         private IConfiguration _configuration;
 
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
+        //public string Id
+        //{
+        //    get { return this._id; }
+        //    set { this._id = value; }
+        //}
 
         public string Message
         {
@@ -53,6 +53,8 @@ namespace BotGoJs.Models
             set { this._type = value; }
         }
 
+
+
         #endregion Properties
 
         #region Methods
@@ -63,27 +65,24 @@ namespace BotGoJs.Models
         public TextModel()
         {
         }
-
         public TextModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var dblist = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable();
+            var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").AsQueryable();
             return new JsonResult(dblist);
         }
-
         public Boolean Save(TextModel data)
         {
             try
             {
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-                data.Id = ObjectId.GenerateNewId().ToString();
+                data._id = ObjectId.GenerateNewId().ToString();
                 data.Type = "Text";
-                dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").InsertOne(data);
+                dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").InsertOne(data);
                 return true;
             }
             catch (Exception)
@@ -92,15 +91,14 @@ namespace BotGoJs.Models
                 return false;
             }
         }
-
         public Boolean Update(TextModel data)
         {
             try
             {
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-                var filter = Builders<TextModel>.Filter.Eq("_id", data.Id);
+                var filter = Builders<TextModel>.Filter.Eq("_id", data._id);
                 data.Type = "Text";
-                dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").ReplaceOne(filter, data);
+                dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").ReplaceOne(filter, data);
                 return true;
             }
             catch (Exception)
@@ -109,14 +107,13 @@ namespace BotGoJs.Models
                 return false;
             }
         }
-
         public Boolean Delete(string id)
         {
             try
             {
                 MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
                 var filter = Builders<TextModel>.Filter.Eq("_id", id);
-                dbClient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").DeleteOne(filter);
+                dbClient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").DeleteOne(filter);
                 return true;
             }
             catch (Exception)
