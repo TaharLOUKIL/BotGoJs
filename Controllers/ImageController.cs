@@ -14,8 +14,6 @@ using System.Threading.Tasks;
 namespace BotGoJs.Controllers
 {
 
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
