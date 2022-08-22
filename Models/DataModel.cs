@@ -1,6 +1,9 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
@@ -8,16 +11,14 @@ namespace BotGoJs.Models
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
-
         public string name { get; set; }
         public Object @object { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string BotID { get; set; }
     }
-
     /// <summary>
-    ///
+    /// 
     /// </summary>
     public class LinkDataArray
     {
@@ -46,4 +47,6 @@ namespace BotGoJs.Models
         public List<NodeDataArray> nodeDataArray { get; set; }
         public List<LinkDataArray> linkDataArray { get; set; }
     }
+
+
 }
