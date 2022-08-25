@@ -1,10 +1,12 @@
 ﻿using BotGoJs.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -13,11 +15,11 @@ namespace BotGoJs.Controllers
     public class BotPressController : ControllerBase
     {
         public readonly IConfiguration _configuration;
-
         public BotPressController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
 
         [HttpGet]
         public JsonResult get()
@@ -33,7 +35,7 @@ namespace BotGoJs.Controllers
 
             obj.audio = new List<AudioModel>();
             obj.audio = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").AsQueryable().ToList();
-
+           
             obj.video = new List<VideoModel>();
             obj.video = dbclient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").AsQueryable().ToList();
 
@@ -43,13 +45,6 @@ namespace BotGoJs.Controllers
             obj.text = new List<TextModel>();
             obj.text = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable().ToList();
             return new JsonResult(obj);
-        }
-
-        // à implémenter
-        [HttpPost]
-        public Boolean Post(DataModel dataModel)
-        {
-            return true;
         }
     }
 }
