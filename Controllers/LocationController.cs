@@ -41,7 +41,7 @@ namespace BotGoJs.Controllers
         public JsonResult Put(LocationModel data)
         {
             LocationModel location = new LocationModel(_configuration);
-            location.Save(data);
+            location.Update(data);
             return get();
         }
 
