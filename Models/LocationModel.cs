@@ -48,7 +48,7 @@ namespace BotGoJs.Models
             set { this._lattitude = value; }
         }
 
-        public string Addresse
+        public string Adresse
         {
             get { return this._adresse; }
             set { this._adresse = value; }
