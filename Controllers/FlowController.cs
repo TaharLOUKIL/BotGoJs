@@ -28,22 +28,22 @@ namespace BotGoJs.Controllers
             var obj = new AnyTypeModel();
 
             obj.image = new List<ImageModel>();
-            obj.image = dbclient.GetDatabase("Gojs").GetCollection<ImageModel>("Image").AsQueryable().ToList();
+            obj.image = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").AsQueryable().ToList();
 
             obj.file = new List<FileModel>();
-            obj.file = dbclient.GetDatabase("Gojs").GetCollection<FileModel>("Fichier").AsQueryable().ToList();
+            obj.file = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("Fichier").AsQueryable().ToList();
 
             obj.audio = new List<AudioModel>();
-            obj.audio = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").AsQueryable().ToList();
+            obj.audio = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<AudioModel>("Audio").AsQueryable().ToList();
            
             obj.video = new List<VideoModel>();
-            obj.video = dbclient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").AsQueryable().ToList();
+            obj.video = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<VideoModel>("Video").AsQueryable().ToList();
 
             obj.location = new List<LocationModel>();
-            obj.location = dbclient.GetDatabase("Gojs").GetCollection<LocationModel>("Localisation").AsQueryable().ToList();
+            obj.location = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<LocationModel>("Localisation").AsQueryable().ToList();
 
             obj.text = new List<TextModel>();
-            obj.text = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").AsQueryable().ToList();
+            obj.text = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").AsQueryable().ToList();
             return new JsonResult(obj);
         }
     }

@@ -30,7 +30,7 @@ namespace BotGoJs.Controllers
         public JsonResult get([FromRoute] string  id)
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-            var dblist = dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").AsQueryable().Where(c=> c.BotID==id).ToList();
+            var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<DataViewModel>("Data").AsQueryable().Where(c=> c.BotID==id).ToList();
             List<DataModel> list = new List<DataModel>();
             foreach(var i in dblist)
             {
@@ -45,8 +45,8 @@ namespace BotGoJs.Controllers
             var res = this.convertTodatabaseModel(data);
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             data._id = ObjectId.GenerateNewId().ToString();
-            dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").InsertOne(res);
-            return new JsonResult(data);
+            dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<DataViewModel>("Data").InsertOne(res);
+            return get(data.BotID);
         }
 
 
@@ -58,8 +58,8 @@ namespace BotGoJs.Controllers
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var filter = Builders<DataViewModel>.Filter.Eq("_id", data._id);
             var res = this.convertTodatabaseModel(data); 
-            dbclient.GetDatabase("Gojs").GetCollection<DataViewModel>("Data").ReplaceOne(filter, res);
-            return new JsonResult(get(data.BotID));
+            dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<DataViewModel>("Data").ReplaceOne(filter, res);
+            return get(data.BotID);
         }
 
        public DataViewModel convertTodatabaseModel(DataModel  data)
@@ -103,7 +103,7 @@ namespace BotGoJs.Controllers
                 {
                     ActionviewModel avm = new ActionviewModel();
                     avm.id  = onenter["_id"];
-                    avm.type = onenter["type"];
+                    avm.type = onenter["Type"];
                     ndavm.onEnter.Add(avm);
                 }
                 ndavm.onRecieve = new List<ActionviewModel>();
@@ -111,7 +111,7 @@ namespace BotGoJs.Controllers
                 {
                     ActionviewModel avm = new ActionviewModel();
                     avm.id = onrecieve["_id"];
-                    avm.type = onrecieve["type"];
+                    avm.type = onrecieve["Type"];
                     ndavm.onRecieve.Add(avm);
                 }
                 ndavm.transition = new List<ActionviewModel>();
@@ -119,7 +119,7 @@ namespace BotGoJs.Controllers
                 {
                     ActionviewModel avm = new ActionviewModel();
                     avm.id = transition["_id"];
-                    avm.type = transition["type"];
+                    avm.type = transition["Type"];
                     ndavm.transition.Add(avm);
                 }
                 Dvm.@object.nodeDataArray.Add(ndavm);
@@ -169,7 +169,7 @@ namespace BotGoJs.Controllers
                     MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
                     if (onenter.type == "Text")
                     {  
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").Find(Builders<TextModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").Find(Builders<TextModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -179,7 +179,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onenter.type == "Video")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -189,7 +189,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onenter.type == "Image")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -199,7 +199,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onenter.type == "Audio")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -209,7 +209,7 @@ namespace BotGoJs.Controllers
                     }
                    else  if (onenter.type == "File")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<FileModel>("File").Find(Builders<FileModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("File").Find(Builders<FileModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -219,7 +219,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onenter.type == "Location")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", onenter.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onenter.type;
@@ -235,7 +235,7 @@ namespace BotGoJs.Controllers
                     MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
                     if (onrecieve.type == "Text")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").Find(Builders<TextModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").Find(Builders<TextModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if(obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -245,7 +245,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onrecieve.type == "Video")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                        if(obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -254,7 +254,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onrecieve.type == "Image")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -264,7 +264,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onrecieve.type == "Audio")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -273,7 +273,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onrecieve.type == "File")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<FileModel>("Fichier").Find(Builders<FileModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("Fichier").Find(Builders<FileModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -282,7 +282,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (onrecieve.type == "Location")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", onrecieve.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = onrecieve.type;
@@ -297,7 +297,7 @@ namespace BotGoJs.Controllers
                     MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
                     if (transition.type == "Text")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<TextModel>("Texte").Find(Builders<TextModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<TextModel>("Text").Find(Builders<TextModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                        if (obj != null)
                         {
                             obj.Type = transition.type;
@@ -306,7 +306,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (transition.type == "Video")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<VideoModel>("Video").Find(Builders<VideoModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                        if (obj != null)
                         {
                             obj.Type = transition.type;
@@ -315,7 +315,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (transition.type == "Image")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").Find(Builders<ImageModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = transition.type;
@@ -325,7 +325,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (transition.type == "Audio")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<AudioModel>("Audio").Find(Builders<AudioModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                        if (obj != null)
                         {
                             obj.Type = transition.type;
@@ -334,7 +334,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (transition.type == "File")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<FileModel>("File").Find(Builders<FileModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("File").Find(Builders<FileModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                        if (obj != null)
                         {
                             obj.Type = transition.type;
@@ -343,7 +343,7 @@ namespace BotGoJs.Controllers
                     }
                     else if (transition.type == "Location")
                     {
-                        var obj = dbclient.GetDatabase("Gojs").GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
+                        var obj = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<LocationModel>("Localisation").Find(Builders<LocationModel>.Filter.Eq("_id", transition.id)).FirstOrDefault();
                         if (obj != null)
                         {
                             obj.Type = transition.type;
