@@ -1,14 +1,6 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
@@ -16,44 +8,38 @@ namespace BotGoJs.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class AudioController : ControllerBase
-    { 
-     public readonly IConfiguration _configuration;
-
-    public AudioController(IConfiguration configuration)
     {
-        _configuration = configuration;
-    }
+        public readonly IConfiguration _configuration;
 
-
-
-
-    [HttpGet]
-    public JsonResult get()
-    {
-            AudioModel audio = new AudioModel(_configuration);
-            
-        return audio.LoadAll();
+        public AudioController(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }
 
-    [HttpPost, DisableRequestSizeLimit]
-    public async Task<JsonResult> upload()
-    {
+        [HttpGet]
+        public JsonResult get()
+        {
+            AudioModel audio = new AudioModel(_configuration);
+
+            return audio.LoadAll();
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<JsonResult> upload()
+        {
             var formCollection = await Request.ReadFormAsync();
             AudioModel audio = new AudioModel(_configuration);
             audio.Save(formCollection);
             return audio.LoadAll();
-
-
         }
 
-    [HttpPut, DisableRequestSizeLimit]
-    public async Task<JsonResult> update()
-    {
+        [HttpPut, DisableRequestSizeLimit]
+        public async Task<JsonResult> update()
+        {
             var formCollection = await Request.ReadFormAsync();
             AudioModel audio = new AudioModel(_configuration);
             audio.Update(formCollection);
             return audio.LoadAll();
-
         }
 
         [HttpDelete("{id}")]
@@ -63,6 +49,5 @@ namespace BotGoJs.Controllers
             audio.Delete(id);
             return get();
         }
-
     }
 }
