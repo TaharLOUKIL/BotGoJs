@@ -1,9 +1,3 @@
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.csproj.AssemblyReference.cache
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.GeneratedMSBuildEditorConfig.editorconfig
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.AssemblyInfoInputs.cache
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.AssemblyInfo.cs
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.csproj.CoreCompileInputs.cache
-C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.MvcApplicationPartsAssemblyInfo.cache
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\BotGoJs.exe
@@ -40,6 +34,12 @@ C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\runtimes\win\native\mongocryp
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Security.AccessControl.dll
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Sources\BotGoJS\BotGoJs\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.csproj.AssemblyReference.cache
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.AssemblyInfoInputs.cache
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.AssemblyInfo.cs
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.csproj.CoreCompileInputs.cache
+C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.MvcApplicationPartsAssemblyInfo.cache
 C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\staticwebassets\BotGoJs.StaticWebAssets.Manifest.cache
 C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.RazorTargetAssemblyInfo.cache
 C:\Sources\BotGoJS\BotGoJs\obj\Debug\netcoreapp3.1\BotGoJs.csproj.CopyComplete
