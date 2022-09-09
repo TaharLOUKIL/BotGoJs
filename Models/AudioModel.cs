@@ -14,8 +14,10 @@ namespace BotGoJs.Models
     public class AudioModel
     {
         #region Properties
+
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
         private string _titre;
         private string _url;
         private DateTime _createdAt;
@@ -58,11 +60,15 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
-        #endregion
+
+        #endregion Properties
+
         #region Methods
+
         public AudioModel()
         {
         }
+
         public AudioModel(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -75,7 +81,7 @@ namespace BotGoJs.Models
             return new JsonResult(dblist);
         }
 
-        public Boolean Save(IFormCollection formCollection )
+        public Boolean Save(IFormCollection formCollection)
         {
             try
             {
@@ -94,7 +100,7 @@ namespace BotGoJs.Models
                         {
                             file.CopyTo(stream);
                         }
-                        audio.Url = _configuration["Variable:FilesRoute"] +"audio/" + fileName;
+                        audio.Url = _configuration["Variable:FilesRoute"] + "audio/" + fileName;
                     }
                 }
                 else
@@ -136,7 +142,7 @@ namespace BotGoJs.Models
                         {
                             file.CopyTo(stream);
                         }
-                        audio.Url = _configuration["Variable:FilesRoute"] +"audio/" + fileName;
+                        audio.Url = _configuration["Variable:FilesRoute"] + "audio/" + fileName;
                     }
                 }
                 else
@@ -145,7 +151,6 @@ namespace BotGoJs.Models
                 }
 
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-
 
                 audio.CreatedAt = DateTime.Parse(formCollection["createdAt"]);
                 audio.ModifiedAt = DateTime.Now;
@@ -160,7 +165,6 @@ namespace BotGoJs.Models
             {
                 return false;
             }
-
         }
 
         public Boolean Delete(string id)
@@ -178,9 +182,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
-        #endregion
 
-
-
+        #endregion Methods
     }
 }
