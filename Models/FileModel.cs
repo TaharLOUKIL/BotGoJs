@@ -5,19 +5,19 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
     public class FileModel
     {
         #region Properties
+
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
         private string _titre;
         private string _url;
         private DateTime _createdAt;
@@ -60,7 +60,8 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Methods
 
@@ -70,16 +71,19 @@ namespace BotGoJs.Models
         public FileModel()
         {
         }
+
         public FileModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("Fichier").AsQueryable();
             return new JsonResult(dblist);
         }
+
         public Boolean SaveAsync(IFormCollection formCollection)
         {
             try
@@ -121,9 +125,8 @@ namespace BotGoJs.Models
             {
                 return false;
             }
-
-
         }
+
         public Boolean Update(IFormCollection formCollection)
         {
             try
@@ -143,7 +146,7 @@ namespace BotGoJs.Models
                         {
                             file.CopyTo(stream);
                         }
-                        fichier.Url = _configuration["Variable:FilesRoute"]+"file/" + fileName;
+                        fichier.Url = _configuration["Variable:FilesRoute"] + "file/" + fileName;
                     }
                 }
                 else
@@ -152,7 +155,6 @@ namespace BotGoJs.Models
                 }
 
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-
 
                 fichier.CreatedAt = DateTime.Parse(formCollection["createdAt"]);
                 fichier.ModifiedAt = DateTime.Now;
@@ -167,8 +169,8 @@ namespace BotGoJs.Models
             {
                 return false;
             }
-
         }
+
         public Boolean Delete(string id)
         {
             try
@@ -176,7 +178,6 @@ namespace BotGoJs.Models
                 MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
                 var filter = Builders<FileModel>.Filter.Eq("_id", id);
-
 
                 dbClient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<FileModel>("Fichier").DeleteOne(filter);
                 return true;

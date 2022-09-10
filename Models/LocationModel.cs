@@ -4,17 +4,17 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
-    public class LocationModel  
+    public class LocationModel
     {
         #region Properties
+
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
         private string _titre;
         private DateTime _createdAt;
         private DateTime _modifiedAt;
@@ -71,7 +71,9 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
-        #endregion
+
+        #endregion Properties
+
         #region Methods
 
         /// <summary>
@@ -80,16 +82,19 @@ namespace BotGoJs.Models
         public LocationModel()
         {
         }
+
         public LocationModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<LocationModel>("Localisation").AsQueryable();
             return new JsonResult(dblist);
         }
+
         public Boolean Save(LocationModel data)
         {
             try
@@ -106,6 +111,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Update(LocationModel data)
         {
             try
@@ -122,6 +128,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Delete(string id)
         {
             try

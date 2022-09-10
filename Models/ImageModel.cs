@@ -5,22 +5,22 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
     /// <summary>
     /// Modèle qui servira à la persistance des images
     /// </summary>
-    public class ImageModel 
+    public class ImageModel
     {
         #region Properties
+
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
         private string _titre;
         private string _url;
         private DateTime _createdAt;
@@ -63,7 +63,8 @@ namespace BotGoJs.Models
             get { return this._type; }
             set { this._type = value; }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Methods
 
@@ -73,16 +74,19 @@ namespace BotGoJs.Models
         public ImageModel()
         {
         }
+
         public ImageModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").AsQueryable();
             return new JsonResult(dblist);
         }
+
         public Boolean SaveAsync(IFormCollection formCollection)
         {
             try
@@ -125,6 +129,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Update(IFormCollection formCollection)
         {
             try
@@ -144,7 +149,7 @@ namespace BotGoJs.Models
                         {
                             file.CopyTo(stream);
                         }
-                        image.Url = _configuration["Variable:FilesRoute"]+"image/" + fileName;
+                        image.Url = _configuration["Variable:FilesRoute"] + "image/" + fileName;
                     }
                 }
                 else
@@ -153,7 +158,6 @@ namespace BotGoJs.Models
                 }
 
                 MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
-
 
                 image.CreatedAt = DateTime.Parse(formCollection["createdAt"]);
                 image.ModifiedAt = DateTime.Now;
@@ -168,9 +172,8 @@ namespace BotGoJs.Models
             {
                 return false;
             }
-
-
         }
+
         public Boolean Delete(string id)
         {
             try
@@ -178,7 +181,6 @@ namespace BotGoJs.Models
                 MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
 
                 var filter = Builders<ImageModel>.Filter.Eq("_id", id);
-
 
                 dbClient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<ImageModel>("Image").DeleteOne(filter);
 
