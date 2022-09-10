@@ -1,12 +1,9 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -15,11 +12,11 @@ namespace BotGoJs.Controllers
     public class BotPressController : ControllerBase
     {
         public readonly IConfiguration _configuration;
+
         public BotPressController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
 
         [HttpGet]
         public JsonResult get()
@@ -35,7 +32,7 @@ namespace BotGoJs.Controllers
 
             obj.audio = new List<AudioModel>();
             obj.audio = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<AudioModel>("Audio").AsQueryable().ToList();
-           
+
             obj.video = new List<VideoModel>();
             obj.video = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<VideoModel>("Video").AsQueryable().ToList();
 

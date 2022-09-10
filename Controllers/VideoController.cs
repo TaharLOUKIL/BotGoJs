@@ -1,12 +1,6 @@
 ﻿using BotGoJs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
@@ -21,7 +15,6 @@ namespace BotGoJs.Controllers
         {
             _configuration = configuration;
         }
-
 
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
@@ -55,6 +48,5 @@ namespace BotGoJs.Controllers
             video.Update(formCollection);
             return video.LoadAll();
         }
-
     }
 }

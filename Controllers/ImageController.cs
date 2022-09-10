@@ -1,19 +1,10 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
@@ -24,7 +15,6 @@ namespace BotGoJs.Controllers
         {
             _configuration = configuration;
         }
-
 
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
@@ -58,9 +48,5 @@ namespace BotGoJs.Controllers
             image.Update(formCollection);
             return image.LoadAll();
         }
-
     }
-
-
-
 }

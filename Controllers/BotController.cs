@@ -1,13 +1,6 @@
 ﻿using BotGoJs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Controllers
 {
@@ -16,6 +9,7 @@ namespace BotGoJs.Controllers
     public class BotController : ControllerBase
     {
         public readonly IConfiguration _configuration;
+
         public BotController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -34,7 +28,6 @@ namespace BotGoJs.Controllers
             BotModel bot = new BotModel(_configuration);
             bot.Save(data);
             return get();
-
         }
 
         [HttpPut]
@@ -44,6 +37,5 @@ namespace BotGoJs.Controllers
             bot.Update(data);
             return get();
         }
-
     }
 }

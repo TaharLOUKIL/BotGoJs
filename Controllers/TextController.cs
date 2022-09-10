@@ -1,7 +1,6 @@
 ﻿using BotGoJs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
 
 namespace BotGoJs.Controllers
 {
