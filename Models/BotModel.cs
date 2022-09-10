@@ -4,26 +4,23 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BotGoJs.Models
 {
     /// <summary>
     /// Modèle qui servira à la persistance des Bots créés depuis le front
     /// </summary>
-    public class BotModel  
+    public class BotModel
     {
-
         #region Properties
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
         private string _name;
         private IConfiguration _configuration;
 
-        
         //public string Id
         //{
         //    get { return this._id; }
@@ -36,7 +33,7 @@ namespace BotGoJs.Models
             set { this._name = value; }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -46,16 +43,19 @@ namespace BotGoJs.Models
         public BotModel()
         {
         }
+
         public BotModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public JsonResult LoadAll()
         {
             MongoClient dbclient = new MongoClient(_configuration.GetConnectionString("gojsConnection"));
             var dblist = dbclient.GetDatabase(_configuration["Variable:Databasename"]).GetCollection<BotModel>("Bots").AsQueryable();
             return new JsonResult(dblist);
         }
+
         public Boolean Save(BotModel data)
         {
             try
@@ -71,6 +71,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
+
         public Boolean Update(BotModel data)
         {
             try
@@ -86,7 +87,7 @@ namespace BotGoJs.Models
                 return false;
             }
         }
-       
+
         #endregion Methods
     }
 }
